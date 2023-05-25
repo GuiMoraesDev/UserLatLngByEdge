@@ -1,14 +1,11 @@
-import { GetStaticProps } from "next";
-import Image from "next/image";
-
-type APIResponse = {
+type Data = {
   hello_message: string;
   presentation: string;
   welcome_message: string;
   see_you_soon_message: string;
 };
 
-export const getData = async (): Promise<APIResponse> => {
+const getData = async (): Promise<Data> => {
   const response = await fetch("https://user-lat-lng-by-edge.vercel.app/api");
 
   if (!response.ok) {
