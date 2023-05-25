@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 type Data = {
   city: string;
   region: string;
@@ -19,10 +23,17 @@ const getData = async (): Promise<Data> => {
   return response.json();
 };
 
-export default async function Home() {
-  const data = await getData();
-  console.log(data);
-  const { city, region, country, ip, latitude, longitude } = data;
+export default function Home() {
+  const [data, setData] = useState<Data | null>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const response = await getData();
+      setData(response);
+    };
+
+    loadData();
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -39,20 +50,20 @@ export default async function Home() {
         </p>
 
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          You are talking from {city}, {region}, {country}
+          You are talking from {data?.city}, {data?.region}, {data?.country}
         </p>
 
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          I know your IP is {ip}
+          I know your IP is {data?.ip}
         </p>
 
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           BTW, that&apos;s your location on the map:{" "}
           <a
-            href={`https://www.google.com/maps/place/${latitude},${longitude}`}
+            href={`https://www.google.com/maps/place/${data?.latitude},${data?.longitude}`}
             className="underline text-lg"
           >
-            {latitude}, {longitude}
+            {data?.latitude}, {data?.longitude}
           </a>
         </p>
 
