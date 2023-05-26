@@ -1,15 +1,7 @@
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 
 export default function Home() {
   const headersStore = headers();
-  const cookieStore = cookies();
-
-  const ipCookie = cookieStore.get("ip");
-  const cityCookie = cookieStore.get("city");
-  const regionCookie = cookieStore.get("region");
-  const countryCookie = cookieStore.get("country");
-  const latitudeCookie = cookieStore.get("latitude");
-  const longitudeCookie = cookieStore.get("longitude");
 
   const ipHeader = headersStore.get("x-ip");
   const cityHeader = headersStore.get("x-city");
@@ -19,12 +11,6 @@ export default function Home() {
   const longitudeHeader = headersStore.get("x-longitude");
 
   console.log({
-    ipCookie: ipCookie?.value,
-    cityCookie: cityCookie?.value,
-    regionCookie: regionCookie?.value,
-    countryCookie: countryCookie?.value,
-    latitudeCookie: latitudeCookie?.value,
-    longitudeCookie: longitudeCookie?.value,
     ipHeader,
     cityHeader,
     regionHeader,
@@ -49,8 +35,7 @@ export default function Home() {
         </p>
 
         <p className="flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-4 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          You are talking from {cityHeader}, {regionHeader},{" "}
-          {countryHeader}
+          You are talking from {cityHeader}, {regionHeader}, {countryHeader}
         </p>
 
         <p className="flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-4 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
