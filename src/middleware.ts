@@ -10,8 +10,6 @@ export function middleware(request: NextRequest) {
   const latitude = geo?.latitude || "Unknown";
   const longitude = geo?.longitude || "Unknown";
 
-  console.log({ ...geo });
-
   const response = NextResponse.next();
 
   response.cookies.set("city", city);
@@ -20,6 +18,10 @@ export function middleware(request: NextRequest) {
   response.cookies.set("ip", ip);
   response.cookies.set("latitude", latitude);
   response.cookies.set("longitude", longitude);
+
+  const cookies = request.cookies.getAll();
+
+  console.log({ cookies, geo, ip });
 
   return response;
 }
