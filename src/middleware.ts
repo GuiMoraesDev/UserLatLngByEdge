@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { geo } = request;
   const ip = request.ip || "Unknown";
   const city = geo?.city || "Unknown";
