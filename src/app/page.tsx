@@ -1,16 +1,23 @@
-"use client";
+import { cookies } from "next/headers";
 
 export default function Home() {
-  const headers = new Headers();
+  const cookieStore = cookies();
 
-  const ip = headers.get("ip");
-  const city = headers.get("city");
-  const region = headers.get("region");
-  const country = headers.get("country");
-  const latitude = headers.get("latitude");
-  const longitude = headers.get("longitude");
+  const ipCookie = cookieStore.get("ip");
+  const cityCookie = cookieStore.get("city");
+  const regionCookie = cookieStore.get("region");
+  const countryCookie = cookieStore.get("country");
+  const latitudeCookie = cookieStore.get("latitude");
+  const longitudeCookie = cookieStore.get("longitude");
 
-  console.log(city, region, country, ip, latitude, longitude);
+  console.log({
+    ipCookie: ipCookie?.value,
+    cityCookie: cityCookie?.value,
+    regionCookie: regionCookie?.value,
+    countryCookie: countryCookie?.value,
+    latitudeCookie: latitudeCookie?.value,
+    longitudeCookie: longitudeCookie?.value,
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-12">
@@ -28,20 +35,21 @@ export default function Home() {
         </p>
 
         <p className="flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-4 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          You are talking from {city}, {region}, {country}
+          You are talking from {cityCookie?.value}, {regionCookie?.value},{" "}
+          {countryCookie?.value}
         </p>
 
         <p className="flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-4 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          I know your IP is {ip}
+          I know your IP is {ipCookie?.value}
         </p>
 
         <p className="flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-4 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           BTW, that&apos;s your location on the map:{" "}
           <a
-            href={`https://www.google.com/maps/place/${latitude},${longitude}`}
+            href={`https://www.google.com/maps/place/${latitudeCookie?.value},${longitudeCookie?.value}`}
             className="underline text-lg"
           >
-            {latitude}, {longitude}
+            {latitudeCookie?.value}, {longitudeCookie?.value}
           </a>
         </p>
 

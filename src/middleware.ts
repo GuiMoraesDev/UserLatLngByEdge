@@ -10,27 +10,16 @@ export async function middleware(request: NextRequest) {
   const latitude = geo?.latitude || "Unknown";
   const longitude = geo?.longitude || "Unknown";
 
-  const requestHeaders = new Headers(request.headers);
+  console.log({ ...geo });
 
-  console.log({
-    ip,
-    city,
-    region,
-    country,
-    latitude,
-    longitude,
-  });
+  const response = NextResponse.next();
 
-  requestHeaders.set("city", city);
-  requestHeaders.set("region", region);
-  requestHeaders.set("country", country);
-  requestHeaders.set("ip", ip);
-  requestHeaders.set("latitude", latitude);
-  requestHeaders.set("longitude", longitude);
+  response.cookies.set("city", city);
+  response.cookies.set("region", region);
+  response.cookies.set("country", country);
+  response.cookies.set("ip", ip);
+  response.cookies.set("latitude", latitude);
+  response.cookies.set("longitude", longitude);
 
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
+  return response;
 }
