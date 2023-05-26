@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
- 
-export function middleware(request: NextRequest) {
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export async function middleware(request: NextRequest) {
   const { geo } = request;
   const ip = request.ip || "Unknown";
   const city = geo?.city || "Unknown";
@@ -11,16 +11,26 @@ export function middleware(request: NextRequest) {
   const longitude = geo?.longitude || "Unknown";
 
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('city', city);
-  requestHeaders.set('region', region);
-  requestHeaders.set('country', country);
-  requestHeaders.set('ip', ip);
-  requestHeaders.set('latitude', latitude);
-  requestHeaders.set('longitude', longitude);
+
+  console.log({
+    ip,
+    city,
+    region,
+    country,
+    latitude,
+    longitude,
+  });
+
+  requestHeaders.set("city", city);
+  requestHeaders.set("region", region);
+  requestHeaders.set("country", country);
+  requestHeaders.set("ip", ip);
+  requestHeaders.set("latitude", latitude);
+  requestHeaders.set("longitude", longitude);
 
   return NextResponse.next({
     request: {
       headers: requestHeaders,
-    }
+    },
   });
-};
+}
