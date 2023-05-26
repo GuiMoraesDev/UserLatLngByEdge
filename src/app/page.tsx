@@ -1,6 +1,7 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 export default function Home() {
+  const headersStore = headers();
   const cookieStore = cookies();
 
   const ipCookie = cookieStore.get("ip");
@@ -10,6 +11,13 @@ export default function Home() {
   const latitudeCookie = cookieStore.get("latitude");
   const longitudeCookie = cookieStore.get("longitude");
 
+  const ipHeader = headersStore.get("x-ip");
+  const cityHeader = headersStore.get("x-city");
+  const regionHeader = headersStore.get("x-region");
+  const countryHeader = headersStore.get("x-country");
+  const latitudeHeader = headersStore.get("x-latitude");
+  const longitudeHeader = headersStore.get("x-longitude");
+
   console.log({
     ipCookie: ipCookie?.value,
     cityCookie: cityCookie?.value,
@@ -17,6 +25,12 @@ export default function Home() {
     countryCookie: countryCookie?.value,
     latitudeCookie: latitudeCookie?.value,
     longitudeCookie: longitudeCookie?.value,
+    ipHeader,
+    cityHeader,
+    regionHeader,
+    countryHeader,
+    latitudeHeader,
+    longitudeHeader,
   });
 
   return (

@@ -10,7 +10,22 @@ export function middleware(request: NextRequest) {
   const latitude = geo?.latitude || "Unknown";
   const longitude = geo?.longitude || "Unknown";
 
-  const response = NextResponse.next();
+  const requestHeaders = new Headers(request.headers);
+
+  requestHeaders.set("x-city", city);
+  requestHeaders.set("x-region", region);
+  requestHeaders.set("x-country", country);
+  requestHeaders.set("x-ip", ip);
+  requestHeaders.set("x-latitude", latitude);
+  requestHeaders.set("x-longitude", longitude);
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
+
+  /* const response = NextResponse.next();
 
   response.cookies.set("city", city);
   response.cookies.set("region", region);
@@ -23,5 +38,5 @@ export function middleware(request: NextRequest) {
 
   console.log({ cookies, geo, ip });
 
-  return response;
+  return response; */
 }
